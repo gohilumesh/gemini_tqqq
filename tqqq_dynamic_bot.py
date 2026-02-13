@@ -19,7 +19,7 @@ if not API_KEY:
     except ImportError:
         print("Error: No API keys found in Environment or config.py")
 # --- SETTINGS ---
-MY_PHONE = 'whatsapp:+1XXXXXXXXXX'  # <--- UPDATE THIS
+MY_PHONE = 'whatsapp:+14802891477'  # <--- UPDATE THIS
 TW_SENDER = 'whatsapp:+14155238886' # Default Twilio Sandbox No.
 
 # --- LOAD SECRETS ---
