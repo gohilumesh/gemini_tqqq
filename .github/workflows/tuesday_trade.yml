@@ -1,0 +1,32 @@
+name: TQQQ Dynamic DCA
+
+on:
+  schedule:
+    # 14:45 UTC is 9:45 AM EST
+    - cron: '0 16 * * 2'
+  workflow_dispatch: # Allows manual "Run" button testing
+
+jobs:
+  trade:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run DCA Script
+        env:
+          # Pulls from GitHub Repository Secrets
+          ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
+          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+          TWILIO_SID: ${{ secrets.TWILIO_SID }}
+          TWILIO_TOKEN: ${{ secrets.TWILIO_TOKEN }}
+        run: python tqqq_dynamic_bot.py
