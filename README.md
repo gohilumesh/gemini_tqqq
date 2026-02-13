@@ -24,8 +24,8 @@ This bot automates a "Self-Refilling" 90/10 portfolio:
 ├── requirements.txt         # Required Python Libraries
 └── README.md                # Project Documentation
 
-```
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
+
+* python3 -m venv .venv
+* source .venv/bin/activate
+* pip install -r requirements.txt
+* python tqqq_dynamic_bot.py
