@@ -83,16 +83,26 @@ def run_strategy():
         
         api.submit_order(symbol='TQQQ', notional=amount, side='buy', type='market', time_in_force='day')
 
-    # 4. Rebalance (90/10)
+    # 4. Rebalance (90/10) — Friday only, and only when market is green (TQQQ up for the day)
     try:
-        acct = api.get_account()
-        total_val = float(acct.portfolio_value)
-        pos = api.get_position('TQQQ')
-        if float(pos.market_value) / total_val > 0.92:
-            sell_amt = float(pos.market_value) - (total_val * 0.90)
-            api.submit_order(symbol='TQQQ', notional=sell_amt, side='sell', type='market', time_in_force='day')
-            send_alert(f"💰 HARVEST: Sold ${sell_amt:.2f} to refill cash.")
-    except: pass
+        today = datetime.datetime.today()
+        is_friday = today.weekday() == 4
+        # Green = most recent trading day closed higher than it opened
+        recent = yf.download("TQQQ", period="5d", interval="1d", progress=False)
+        market_green = recent['Close'].iloc[-1] > recent['Open'].iloc[-1] if len(recent) else False
+
+        if is_friday and market_green:
+            acct = api.get_account()
+            total_val = float(acct.portfolio_value)
+            pos = api.get_position('TQQQ')
+            if float(pos.market_value) / total_val > 0.92:
+                sell_amt = float(pos.market_value) - (total_val * 0.90)
+                api.submit_order(symbol='TQQQ', notional=sell_amt, side='sell', type='market', time_in_force='day')
+                send_alert(f"💰 HARVEST: Sold ${sell_amt:.2f} to refill cash (Friday, green day).")
+        elif is_friday and not market_green:
+            send_alert("📅 FRIDAY: Market red — skipping harvest. Will try next Friday.")
+    except Exception as e:
+        print(f"Rebalance check: {e}")
 
 if __name__ == "__main__":
     run_strategy()

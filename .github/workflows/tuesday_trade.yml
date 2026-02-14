@@ -2,8 +2,9 @@ name: TQQQ Dynamic DCA
 
 on:
   schedule:
-    # 14:45 UTC is 9:45 AM EST
+    # Tuesday 11:00 AM EST (DCA buys) | Friday 9:30 AM EST (harvest when green)
     - cron: '0 16 * * 2'
+    - cron: '30 14 * * 5'
   workflow_dispatch: # Allows manual "Run" button testing
 
 jobs:
