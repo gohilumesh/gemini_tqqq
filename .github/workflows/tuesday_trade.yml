@@ -25,9 +25,9 @@ jobs:
 
       - name: Run DCA Script
         env:
-          # Pulls from GitHub Repository Secrets
-          ALPACA_KEY: ${{ secrets.ALPACA_KEY }}
-          ALPACA_SECRET: ${{ secrets.ALPACA_SECRET }}
+          # Must match names in tqqq_dynamic_bot.py (Repository Secrets)
+          ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
+          ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
           TWILIO_SID: ${{ secrets.TWILIO_SID }}
           TWILIO_TOKEN: ${{ secrets.TWILIO_TOKEN }}
         run: python tqqq_dynamic_bot.py
