@@ -29,3 +29,16 @@ This bot automates a "Self-Refilling" 90/10 portfolio:
 * source .venv/bin/activate
 * pip install -r requirements.txt
 * python tqqq_dynamic_bot.py
+
+### Simulate locally (no orders, no WhatsApp)
+
+```bash
+# See what would happen today
+python tqqq_dynamic_bot.py --dry-run
+
+# Simulate as if today is Tuesday (DCA buy logic)
+python tqqq_dynamic_bot.py --dry-run --day tue
+
+# Simulate as if today is Friday (harvest-when-green logic)
+python tqqq_dynamic_bot.py --dry-run --day fri
+```
