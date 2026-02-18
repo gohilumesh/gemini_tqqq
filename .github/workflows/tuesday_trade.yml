@@ -25,10 +25,14 @@ jobs:
 
       - name: Run DCA Script
         env:
-          # Must match names in tqqq_dynamic_bot.py (Repository Secrets)
+          # Our script reads these
           ALPACA_API_KEY: ${{ secrets.ALPACA_API_KEY }}
           ALPACA_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
           TWILIO_SID: ${{ secrets.TWILIO_SID }}
           TWILIO_TOKEN: ${{ secrets.TWILIO_TOKEN }}
+          # alpaca-trade-api library reads these (required or it raises Key ID must be given)
+          APCA_API_KEY_ID: ${{ secrets.ALPACA_API_KEY }}
+          APCA_API_SECRET_KEY: ${{ secrets.ALPACA_SECRET_KEY }}
+          APCA_API_BASE_URL: 'https://paper-api.alpaca.markets'
         run: python tqqq_dynamic_bot.py
         # Repository Secrets required: ALPACA_API_KEY, ALPACA_SECRET_KEY, TWILIO_SID, TWILIO_TOKEN

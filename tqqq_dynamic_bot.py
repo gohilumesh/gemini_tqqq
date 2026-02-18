@@ -46,6 +46,11 @@ if not TW_SID or not TW_TOKEN:
         pass
 DYNAMIC_RALLY_THRESHOLD = 0.15      # 15% limit
 # --- HELPERS ---
+# alpaca-trade-api reads APCA_* env vars; set them so the library finds credentials (e.g. in GitHub Actions)
+if API_KEY and SECRET_KEY:
+    os.environ['APCA_API_KEY_ID'] = API_KEY
+    os.environ['APCA_API_SECRET_KEY'] = SECRET_KEY
+    os.environ['APCA_API_BASE_URL'] = ALPACA_URL
 api = tradeapi.REST(API_KEY, SECRET_KEY, ALPACA_URL) if (API_KEY and SECRET_KEY) else None
 
 def send_alert(message):
